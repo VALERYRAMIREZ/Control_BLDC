@@ -4,7 +4,7 @@
 
 char det_Tecla(unsigned char lectura)/* Función para asignar el valor*/
 {                                       /* a la tecla presionada.             */
-    unsigned char valorTecla;
+    char valorTecla;
     switch(lectura)
     {
         /* Teclas de la fila superior.                                        */

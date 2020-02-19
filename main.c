@@ -24,7 +24,7 @@ int main(void) {
     Inicia_Interr();
     Inicia_LCD4();
     Posicion_Cur4b(1,0);
-    Menu_S(3);
+    Menu();
     Ciclo_Timer1(10,0b0000000000000010);
     PORTE = 0x08;
     Inicia_Ciclo_Timer1();
@@ -41,7 +41,9 @@ int main(void) {
         {
             boton = det_Tecla(PORTE);
             senales.tecla = 0;
+            Posicion_Cur4b(2,6);
+            Mensaje_Ent((char *) boton);
         }
-    };
+    }
     return 0;
 }
