@@ -3,7 +3,7 @@
 
 
 SENALES senales;                        /* Declaración de la variable senales */
-unsigned char teclado;                  /* para usarla en la interrupción que */
+                                        /* para usarla en la interrupción que */
                                         /* sea necesaria.                     */
 
 void Inicia_Interr(void)                /* Función para configurar e iniciar

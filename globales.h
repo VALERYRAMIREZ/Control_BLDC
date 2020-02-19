@@ -13,8 +13,10 @@
 
 /*              Variables globales a usar en el sistema.                      */
 
-extern unsigned char teclado;           /* Variable global donde se almacena el
+unsigned char teclado;                  /* Variable global donde se almacena el
                                          * estado del teclado.                */
+unsigned char tecladoAnt;               /* Variable global donde se almacena el
+                                         * estado anterior del teclado.       */
 
 typedef union                           /* Variable tipo estructura para      */
 {                                       /* marcar eventos de interrupciones en*/
