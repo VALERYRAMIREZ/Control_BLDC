@@ -6,8 +6,8 @@
 /*       Definición de opciones de menú a desplegar en la pantalla LCD.       */
 
 const char *menu_i[] = {"1) Hora","2) Param. Motor","3) Manual","4) Auto"};
-const char *menu_r[] = {"DD","MM","AAAA","HH","MM","SS"};
-const char *menu_m[] = {"PP","II","DD"};
+const char *menu_r[] = {"  Config. fecha","DD:","MM:","AA:","hh:","mm:","ss:"};
+const char *menu_m[] = {"   Param. PID","P:","I:","D:"};
 
 /* Definición de funciones para el control de la pantalla LCD. */
 
@@ -247,5 +247,47 @@ void Menu(void)                         /* Función para mostrar el menú       */
     {
         Posicion_Cur4b(linea+1,0);
         Mensaje_Ent((char*) menu_i[linea]);
+    }
+}
+
+void Menu_S(unsigned char funcion)      /* Función para desplegar los menú    */
+{                                       /* secundarios.                       */
+    switch(funcion)
+    {
+        case 1:
+        {
+            short linea;
+            for(linea = 0; linea < 4; linea++)
+            {
+                Posicion_Cur4b(linea+1,0);
+                if(!linea)
+                {
+                    Mensaje_Ent((char*) menu_r[linea]);
+                }
+                else
+                {
+                    Mensaje_Ent((char*) menu_r[linea]);
+                    Posicion_Cur4b(linea+1,8);
+                    Mensaje_Ent((char*) menu_r[linea+3]);
+                }
+            }
+        }
+        break;
+        case 2:
+        {
+            short linea;
+            for(linea = 0; linea < 4; linea++)
+            {
+                Posicion_Cur4b(linea+1,0);
+                Mensaje_Ent((char*) menu_m[linea]);
+            }
+        }
+        break;
+        default:
+        {
+            Posicion_Cur4b(2,0);
+            Mensaje_Ent((char*) "   No hay menú");
+        }
+        break;
     }
 }
