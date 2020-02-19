@@ -24,7 +24,7 @@ int main(void) {
     Inicia_Interr();
     Inicia_LCD4();
     Posicion_Cur4b(1,0);
-    Menu();
+    Menu_S(3);
     Ciclo_Timer1(10,0b0000000000000010);
     PORTE = 0x08;
     Inicia_Ciclo_Timer1();
