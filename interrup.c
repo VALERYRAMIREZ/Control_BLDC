@@ -45,7 +45,6 @@ void __attribute__((interrupt(no_auto_psv))) _T1Interrupt(void)/* Función para*/
     {                                   /* del teclado.                       */
         PORTE = 0x08;
     }
-    //tecladoAnt = PORTE;
 }
 
 void __attribute__((interrupt(no_auto_psv))) _T3Interrupt(void)/* Función para*/
