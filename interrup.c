@@ -1,12 +1,13 @@
 #include "interrup.h"
 #include "globales.h"
+#include "botones.h"
 
 
 SENALES senales;                        /* Declaración de la variable senales */
                                         /* para usarla en la interrupción que */
                                         /* sea necesaria.                     */
-extern unsigned char teclado;
-extern unsigned char tecladoAnt;
+unsigned char teclado;
+unsigned char tecladoAnt;
 
 void Inicia_Interr(void)                /* Función para configurar e iniciar
                                          * las fuentes de interrupción.       */
@@ -44,7 +45,7 @@ void __attribute__((interrupt(no_auto_psv))) _T1Interrupt(void)/* Función para*/
     {                                   /* del teclado.                       */
         PORTE = 0x08;
     }
-    tecladoAnt = PORTE;
+    //tecladoAnt = PORTE;
 }
 
 void __attribute__((interrupt(no_auto_psv))) _T3Interrupt(void)/* Función para*/
@@ -55,8 +56,8 @@ void __attribute__((interrupt(no_auto_psv))) _T3Interrupt(void)/* Función para*/
 
 void __attribute__((interrupt(no_auto_psv))) _CNInterrupt(void)/* Función para*/
 {                                       /* el manejo de la interrupción por   */
-    senales.flanco = flanco(tecladoAnt & 1, PORTE & 1 )
-    
+    teclado = PORTE;
+    flanco(tecladoAnt & 0x10, teclado & 0x10);
     senales.tecla = 1;
     IFS1bits.CNIF = 0;
 }
