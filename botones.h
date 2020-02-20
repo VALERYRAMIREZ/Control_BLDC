@@ -9,13 +9,13 @@
 #define	XC_BOTONES_H
 
 #include <xc.h> 
-#include <stdio.h>
+#include <stdbool.h>
 
 /*          Definiciones de constantes usadas para el teclado.                */
 
 /*               Prototipos de funciones para manejo del teclado.             */
 
-bool flanco(unsigned char estado);      /* Prototipo de función para detectar
+bool flanco(bool bitAnt, bool bit);     /* Prototipo de función para detectar
                                          * el flanco del cambio de estado en un
                                          * bit.                               */
 

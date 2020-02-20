@@ -13,9 +13,9 @@
 
 /*              Variables globales a usar en el sistema.                      */
 
-unsigned char teclado;                  /* Variable global donde se almacena el
+extern unsigned char teclado;           /* Variable global donde se almacena el
                                          * estado del teclado.                */
-unsigned char tecladoAnt;               /* Variable global donde se almacena el
+extern unsigned char tecladoAnt;        /* Variable global donde se almacena el
                                          * estado anterior del teclado.       */
 
 typedef union                           /* Variable tipo estructura para      */
@@ -23,7 +23,8 @@ typedef union                           /* Variable tipo estructura para      */
     unsigned int banderas;              /* marcar eventos de interrupciones en*/
     struct                              /* las interrupciones.                */
     {                                   
-        unsigned int restantes:15;
+        unsigned int restantes:14;
+        unsigned int flanco:1;
         unsigned int tecla:1;           /* Bandera para indicar el uso de la 
                                          * interrupción por notificación de
                                          * cambio en un pin.                  */
