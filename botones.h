@@ -15,7 +15,12 @@
 
 /*               Prototipos de funciones para manejo del teclado.             */
 
-bool flanco(bool bitAnt, bool bit);     /* Prototipo de función para detectar
+unsigned char Anti_R(uint8_t estado, bool pin);/* Prototipo de función
+                                         * para realizar un filtro pasa bajo
+                                         * exponencial con el fin de realizar
+                                         * un antirebote en un pin específico.*/
+
+unsigned int flanco(bool bitAnt, bool bit);/* Prototipo de función para detectar
                                          * el flanco del cambio de estado en un
                                          * bit.                               */
 

@@ -1,21 +1,45 @@
 #include "botones.h"
 #include "globales.h"
 #include <stdbool.h>
+#include <stdio.h>
 
+/*             Variables a utilizar por las funciones.                        */
+
+enum estBotones                     /* Enumerador para seleccionar el valor de*/
+{                                   /* salida de la función para deteccion de */
+    bajo,                           /* flancos.                               */
+    alto,
+    subida,
+    bajada
+};
 /*            Funciones para discriminar la tecla presionada.                 */
 
-bool flanco(bool bitAnt, bool bit)  /* Función para determinar el tipo de     */
-{                                   /* flanco que hubo al darse un cambio de  */
-    extern SENALES senales;         /* estado en el puerto E. La función solo */
-    if(!bitAnt && bit)              /* debe llamarse al darse un cambio en el */
-    {                               /* estado del puerto.                     */
-        senales.flanco = 1;
+uint8_t Anti_R(uint8_t estado, bool pin)
+{
+    uint8_t vieja = estado & 0x7f;
+    bool bandera = (estado & 0x80)? true : false;
+    
+    vieja -= (vieja >> 2);          /* El corrimiento de 2 divide a la variable
+                                     * "vieja" por 4: y = x/n es lo mismo que
+                                     * x >> n.                                */
+    vieja += pin? 0x1f : 0x00;      /* Si el bit es igual a 1 le suma 25%.    */
+    
+    estado = (vieja & 0x7f) | ((bandera & 0x01) << 0x07);
+    return estado;
+}
+
+unsigned int flanco(bool bitAnt, bool bit)/* Función para determinar el tipo  */
+{                                   /* de flanco que hubo al darse un cambio  */
+    extern unsigned int estBotones; /* de estado en el puerto E. La función   */
+    if(!bitAnt && bit)              /* solo debe llamarse al darse un cambio  */
+    {                               /* en el estado del puerto.               */
+        estBotones = subida;
     }
     else if(bitAnt && !bit)
     {
-        senales.flanco = 0;
+        estBotones = bajada;
     }
-    return senales.flanco;
+    return estBotones;
 }
 
 char det_Tecla(unsigned char lectura)/* Función para asignar el valor*/
