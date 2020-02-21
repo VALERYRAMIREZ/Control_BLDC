@@ -8,6 +8,7 @@ SENALES senales;                        /* Declaración de la variable senales */
                                         /* sea necesaria.                     */
 unsigned char teclado;
 unsigned char tecladoAnt;
+uint8_t tTecla;
 
 void Inicia_Interr(void)                /* Función para configurar e iniciar
                                          * las fuentes de interrupción.       */
