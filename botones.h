@@ -24,6 +24,10 @@ unsigned int flanco(bool bitAnt, bool bit);/* Prototipo de función para detectar
                                          * el flanco del cambio de estado en un
                                          * bit.                               */
 
+uint8_t detec_Columna(uint8_t pad);     /* Prototipo de función para detectar
+                                         * la columna activada cuando se han
+                                         * presionado teclas.                 */
+
 char det_Tecla(uint8_t lectura);  /* Prototipo de función para
                                          * asignar el valor de la tecla
                                          * presionada.                         */
