@@ -67,9 +67,9 @@ uint8_t detec_Columna(uint8_t pad)      /* Función para detectar la columna   */
             pinA = 0x80;
             break;
         }        
-        default:
-        {
-            pinA = 0xf0;
+        default:                        /* El caso por defecto devuelve un    */
+        {                               /* valor que no sirve de manera que la*/
+            pinA = 0xf0;                /* próxima función no haga nada.      */
             break;
         }
     }
