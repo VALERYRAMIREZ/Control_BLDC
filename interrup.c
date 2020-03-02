@@ -60,10 +60,11 @@ void __attribute__((interrupt(no_auto_psv))) _T3Interrupt(void)/* Función para*/
 
 void __attribute__((interrupt(no_auto_psv))) _CNInterrupt(void)/* Función para*/
 {                                       /* el manejo de la interrupción por   */
-    static volatile uint8_t estado = 0;
+    static volatile uint8_t estado = 0, pin;
     teclado = PORTE;
-    Anti_R(estado,teclado & 0x10);
-    if((flanco(tecladoAnt & 0x10, teclado & 0x10) == 2) && !tTecla) 
+    //Anti_R(estado,teclado & 0x10);
+    pin = detec_Columna(teclado);
+    if((flanco(tecladoAnt & pin, teclado & pin) == 2) && !tTecla) 
     {
         senales.tecla = 1;
     }
