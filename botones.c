@@ -42,6 +42,40 @@ unsigned int flanco(bool bitAnt, bool bit)/* Función para determinar el tipo  */
     return estFlanco;
 }
 
+uint8_t detec_Columna(uint8_t pad)      /* Función para detectar la columna   */
+{                                       /* activada cuando se han presionado  */
+    uint8_t pinA;                       /* teclas y devuelve la posición en el*/
+    switch(pad & 0xf0)                  /* nibble alto de la columna activada,*/
+    {                                   /* la función está hecha para que la  */
+        case 0x10:                      /* función "flanco" sepa cual bit va a*/
+        {                               /* comparar.                          */
+            pinA = 0x10;
+            break;
+        }
+        case 0x20:
+        {
+            pinA = 0x20;
+            break;
+        }       
+        case 0x40:
+        {
+            pinA = 0x40;
+            break;
+        }        
+        case 0x80:
+        {
+            pinA = 0x80;
+            break;
+        }        
+        default:
+        {
+            pinA = 0xf0;
+            break;
+        }
+    }
+    return pinA;
+}
+
 char det_Tecla(uint8_t lectura)         /* Función para asignar el valor      */
 {                                       /* a la tecla presionada.             */
     char valorTecla;
