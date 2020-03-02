@@ -36,14 +36,14 @@ int main(void) {
     while(1)
     {
         tecladoAnt = PORTE;
-        //boton = Lee_Teclado(PORTE);
-        //asm("nop");
         if(senales.tecla)
         {
-            Posicion_Cur4b(1,11);
+//            Posicion_Cur4b(1,11);
             boton = det_Tecla(teclado);
-            Mensaje_Ent(&boton);
-            senales.tecla = 0;          
+//            Mensaje_Ent(&boton);
+            Selec_MenuS(boton);
+            senales.tecla = 0;     
+            
         }                               
     }
     return 0;
