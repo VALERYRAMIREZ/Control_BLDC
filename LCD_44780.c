@@ -245,12 +245,44 @@ void Menu(void)                         /* Función para mostrar el menú       */
     short linea;
     for(linea = 0; linea < 4;linea++)
     {
-        Posicion_Cur4b(linea+1,0);
+        Posicion_Cur4b(linea+1,1);
         Mensaje_Ent((char*) menu_i[linea]);
     }
 }
 
-void Menu_S(unsigned char funcion)      /* Función para desplegar los menú    */
+void Selec_MenuS(char posMenu)          /* Función para desplazarse a través  */
+{                                       /* de las funciones del menu principal*/
+    static volatile short fila = 1;     /* con el fin de seleccionar el menú  */
+    if(posMenu == 'A')                  /* secundario a deplegar.             */
+    {
+        fila++;
+        Posicion_Cur4b(fila - 1,0);
+        Mensaje_Ent((char*) " ");
+    }
+    else if(posMenu == 'B')
+    {
+        fila--;
+        Posicion_Cur4b(fila + 1,0);
+        Mensaje_Ent((char*) " ");
+    }
+    switch(fila)
+    {
+        case 5:
+        {
+            fila = 1;
+            break;
+        }
+        case 0:
+        {
+            fila = 4;
+            break;
+        }
+    }
+    Posicion_Cur4b(fila,0);
+    Mensaje_Ent((char*) ">");
+}
+
+void Menu_S(uint8_t funcion)      /* Función para desplegar los menú    */
 {                                       /* secundarios.                       */
     switch(funcion)
     {
@@ -259,7 +291,7 @@ void Menu_S(unsigned char funcion)      /* Función para desplegar los menú    */
             short linea;
             for(linea = 0; linea < 4; linea++)
             {
-                Posicion_Cur4b(linea+1,0);
+                Posicion_Cur4b(linea+1,1);
                 if(!linea)
                 {
                     Mensaje_Ent((char*) menu_r[linea]);

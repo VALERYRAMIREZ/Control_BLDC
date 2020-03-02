@@ -157,7 +157,10 @@ void Menu(void);                        /* Prototipo de función para seleccionar
                                          * el menú a desplegar en la panalla
                                          * LCD.                               */
 
-void Menu_S(unsigned char funcion);     /* Prototipo de función para imprimir */
+void Selec_MenuS(char posMenu);         /* Prototipo de función para seleccionar
+                                         * el menú secundario a deplegar.     */
+
+void Menu_S(uint8_t funcion);           /* Prototipo de función para imprimir */
                                         /* los menúes secundarios.            */
 
 #endif	/* LCD_44780_H */
