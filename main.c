@@ -42,9 +42,9 @@ int main(void) {
         {
             Posicion_Cur4b(1,11);
             boton = det_Tecla(teclado);
-            Mensaje_Ent((char*) &boton);
-            senales.tecla = 0;
-        }
+            Mensaje_Ent(&boton);
+            senales.tecla = 0;          
+        }                               
     }
     return 0;
 }
