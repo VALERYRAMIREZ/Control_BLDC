@@ -24,7 +24,7 @@ int main(void) {
     Inicia_Interr();
     Inicia_LCD4();
     Posicion_Cur4b(1,0);
-    Menu_S(3);
+    Menu();
     Ciclo_Timer1(10,0b0000000000000010);
     PORTE = 0x08;
     Inicia_Ciclo_Timer1();
@@ -35,13 +35,16 @@ int main(void) {
                                         /* variable externa.                  */
     while(1)
     {
+        tecladoAnt = PORTE;
         //boton = Lee_Teclado(PORTE);
         //asm("nop");
         if(senales.tecla)
         {
-            boton = det_Tecla(PORTE);
-            senales.tecla = 0;
-        }
-    };
+            Posicion_Cur4b(1,11);
+            boton = det_Tecla(teclado);
+            Mensaje_Ent(&boton);
+            senales.tecla = 0;          
+        }                               
+    }
     return 0;
 }
