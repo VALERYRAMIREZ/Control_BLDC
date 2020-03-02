@@ -18,7 +18,7 @@
 
 int main(void) {
     extern SENALES senales;
-//    char boton;
+    char boton;
     Tipo_Osc(PROSC);
     Confi_E_S();
     Inicia_Interr();
@@ -38,13 +38,13 @@ int main(void) {
         tecladoAnt = PORTE;
         //boton = Lee_Teclado(PORTE);
         //asm("nop");
-//        if(senales.tecla)
-//        {
-//            boton = det_Tecla(PORTE);
-//            senales.tecla = 0;
-//            Posicion_Cur4b(2,6);
-//            Mensaje_Ent((char *) boton);
-//        }
+        if(senales.tecla)
+        {
+            Posicion_Cur4b(1,11);
+            boton = det_Tecla(teclado);
+            Mensaje_Ent(&boton);
+            senales.tecla = 0;          
+        }                               
     }
     return 0;
 }
