@@ -8,7 +8,7 @@ SENALES senales;                        /* Declaración de la variable senales */
                                         /* sea necesaria.                     */
 unsigned char teclado;
 unsigned char tecladoAnt;
-uint8_t tTecla;
+uint8_t tTecla = 0;
 
 void Inicia_Interr(void)                /* Función para configurar e iniciar
                                          * las fuentes de interrupción.       */
@@ -46,6 +46,10 @@ void __attribute__((interrupt(no_auto_psv))) _T1Interrupt(void)/* Función para*/
     {                                   /* del teclado.                       */
         PORTE = 0x08;
     }
+    if(senales.tecla)
+    {
+        tTecla++;
+    }
 }
 
 void __attribute__((interrupt(no_auto_psv))) _T3Interrupt(void)/* Función para*/
@@ -56,10 +60,16 @@ void __attribute__((interrupt(no_auto_psv))) _T3Interrupt(void)/* Función para*/
 
 void __attribute__((interrupt(no_auto_psv))) _CNInterrupt(void)/* Función para*/
 {                                       /* el manejo de la interrupción por   */
+    static volatile uint8_t estado = 0;
     teclado = PORTE;
-    if(!flanco(tecladoAnt & 0x10, teclado & 0x10))
+    Anti_R(estado,teclado & 0x10);
+    if((flanco(tecladoAnt & 0x10, teclado & 0x10) == 2) && !tTecla) 
     {
         senales.tecla = 1;
+    }
+    if(tTecla == 10)
+    {
+        senales.tecla = 0;
     }
     IFS1bits.CNIF = 0;
 }

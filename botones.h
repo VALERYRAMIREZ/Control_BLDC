@@ -24,7 +24,7 @@ unsigned int flanco(bool bitAnt, bool bit);/* Prototipo de función para detectar
                                          * el flanco del cambio de estado en un
                                          * bit.                               */
 
-char det_Tecla(unsigned char lectura);  /* Prototipo de función para
+char det_Tecla(uint8_t lectura);  /* Prototipo de función para
                                          * asignar el valor de la tecla
                                          * presionada.                         */
 
