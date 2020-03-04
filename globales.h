@@ -35,6 +35,7 @@ typedef union                           /* Variable tipo estructura para      */
     struct                              /* las interrupciones.                */
     {                                   
         unsigned int restantes:14;
+        unsigned int nInterfaz:2;
         unsigned int flanco:1;
         unsigned int tecla:1;           /* Bandera para indicar el uso de la 
                                          * interrupción por notificación de
