@@ -23,6 +23,9 @@ extern uint8_t tTecla;                  /* Variable para contar la cantidad de
                                          * antirebote cuando se detecta la
                                          * presión de una tecla.              */
 
+extern uint8_t selMenu;                 /* Variable para almacenar el menú a 
+                                         * seleccionar.                       */
+
 //static volatile uint8_t estado;         /* variable que conserva el estado de
 //                                         * la suma del filtro antirebote.     */
 
