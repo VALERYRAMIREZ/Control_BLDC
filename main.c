@@ -46,13 +46,17 @@ int main(void) {
             if(strcmp(&boton,"#"))
             {
                 Selec_MenuS(boton);
+                senales.nInterfaz = 2;
             }
             else if(!strcmp(&boton,"#"))
             {
                 Menu_S(selMenu);
             }
+            else if(!strcmp(&boton,"*") && (senales.nInterfaz == 2))
+            {
+                Menu();
+            }            
             senales.tecla = 0;     
-            
         }                               
     }
     return 0;
