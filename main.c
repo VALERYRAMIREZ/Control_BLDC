@@ -7,6 +7,7 @@
 
 
 #include <xc.h>
+#include <string.h>
 #include "globales.h"
 #include "sistema.h"
 #include "E_S.h"
@@ -19,6 +20,7 @@
 int main(void) {
     extern SENALES senales;
     char boton;
+    extern uint8_t selMenu;
     Tipo_Osc(PROSC);
     Confi_E_S();
     Inicia_Interr();
@@ -41,7 +43,14 @@ int main(void) {
 //            Posicion_Cur4b(1,11);
             boton = det_Tecla(teclado);
 //            Mensaje_Ent(&boton);
-            Selec_MenuS(boton);
+            if(strcmp(&boton,"#"))
+            {
+                Selec_MenuS(boton);
+            }
+            else if(!strcmp(&boton,"#"))
+            {
+                Menu_S(selMenu);
+            }
             senales.tecla = 0;     
             
         }                               
