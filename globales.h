@@ -18,13 +18,16 @@ extern unsigned char teclado;           /* Variable global donde se almacena el
 extern unsigned char tecladoAnt;        /* Variable global donde se almacena el
                                          * estado anterior del teclado.       */
 
-extern uint8_t tTecla;            /* Variable para contar la cantidad de
+extern uint8_t tTecla;                  /* Variable para contar la cantidad de
                                          * veces que se realizará el filtraje
                                          * antirebote cuando se detecta la
                                          * presión de una tecla.              */
 
-static volatile unsigned char estado;   /* variable que conserva el estado de
-                                         * la suma del filtro antirebote.     */
+extern uint8_t selMenu;                 /* Variable para almacenar el menú a 
+                                         * seleccionar.                       */
+
+//static volatile uint8_t estado;         /* variable que conserva el estado de
+//                                         * la suma del filtro antirebote.     */
 
 typedef union                           /* Variable tipo estructura para      */
 {                                       /* marcar eventos de interrupciones en*/

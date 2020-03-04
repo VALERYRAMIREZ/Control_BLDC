@@ -7,6 +7,7 @@
 
 
 #include <xc.h>
+#include <string.h>
 #include "globales.h"
 #include "sistema.h"
 #include "E_S.h"
@@ -18,7 +19,8 @@
 
 int main(void) {
     extern SENALES senales;
-//    char boton;
+    char boton;
+    extern uint8_t selMenu;
     Tipo_Osc(PROSC);
     Confi_E_S();
     Inicia_Interr();
@@ -36,15 +38,22 @@ int main(void) {
     while(1)
     {
         tecladoAnt = PORTE;
-        //boton = Lee_Teclado(PORTE);
-        //asm("nop");
-//        if(senales.tecla)
-//        {
-//            boton = det_Tecla(PORTE);
-//            senales.tecla = 0;
-//            Posicion_Cur4b(2,6);
-//            Mensaje_Ent((char *) boton);
-//        }
+        if(senales.tecla)
+        {
+//            Posicion_Cur4b(1,11);
+            boton = det_Tecla(teclado);
+//            Mensaje_Ent(&boton);
+            if(strcmp(&boton,"#"))
+            {
+                Selec_MenuS(boton);
+            }
+            else if(!strcmp(&boton,"#"))
+            {
+                Menu_S(selMenu);
+            }
+            senales.tecla = 0;     
+            
+        }                               
     }
     return 0;
 }
