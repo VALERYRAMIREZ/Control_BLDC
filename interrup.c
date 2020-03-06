@@ -61,16 +61,21 @@ void __attribute__((interrupt(no_auto_psv))) _T3Interrupt(void)/* Función para*/
 void __attribute__((interrupt(no_auto_psv))) _CNInterrupt(void)/* Función para*/
 {                                       /* el manejo de la interrupción por   */
     static volatile uint8_t estado = 0, pin;
-    teclado = PORTE;
+    //teclado = PORTE;
     //Anti_R(estado,teclado & 0x10);
-    pin = detec_Columna(teclado);
-    if((flanco(tecladoAnt & pin, teclado & pin) == 2) && !tTecla) 
+       if(estado != 2)
+    {
+        pin = detec_Columna(PORTE);
+        teclado = PORTE;
+    }
+    estado = flanco(tecladoAnt & pin, PORTE & pin);
+    if(estado == 3)// && !tTecla) 
     {
         senales.tecla = 1;
     }
-    if(tTecla == 10)
-    {
-        senales.tecla = 0;
-    }
+//    if(tTecla == 10)
+//    {
+//        senales.tecla = 0;
+//    }
     IFS1bits.CNIF = 0;
 }
