@@ -25,15 +25,13 @@ int main(void) {
     Confi_E_S();
     Inicia_Interr();
     Inicia_LCD4();
-    Posicion_Cur4b(1,0);
-    Menu();
     Ciclo_Timer1(10,0b0000000000000010);
     PORTE = 0x08;
     Inicia_Ciclo_Timer1();
     senales.tecla = 0;                  /* Lo puedo llamar de esa forma porque*/
-                                        /* ya está instanciada la union en    */
-                                        /* interup.c y al inicio de main se   */
-                                        /* instancia la estructura como una   */
+    Posicion_Cur4b(1,0);                /* ya está instanciada la union en    */
+    Menu();                             /* interup.c y al inicio de main se   */
+    Selec_MenuS(1);                      /* instancia la estructura como una   */
                                         /* variable externa.                  */
     while(1)
     {
@@ -43,16 +41,23 @@ int main(void) {
 //            Posicion_Cur4b(1,11);
             boton = det_Tecla(teclado);
 //            Mensaje_Ent(&boton);
-            if(strcmp(&boton,"#"))
+            if(strcmp(&boton,"#") && !senales.nInterfaz)
             {
                 Selec_MenuS(boton);
             }
-            else if(!strcmp(&boton,"#"))
+            else if(!strcmp(&boton,"#") && !senales.nInterfaz)
             {
                 Menu_S(selMenu);
+                senales.nInterfaz = 1;
             }
-            senales.tecla = 0;     
-            
+            else if(!strcmp(&boton,"*") && senales.nInterfaz)
+            {
+                Menu();
+                Selec_MenuS(boton);
+                senales.nInterfaz = 0;
+            }            
+            boton = 0;
+            senales.tecla = 0;    
         }                               
     }
     return 0;

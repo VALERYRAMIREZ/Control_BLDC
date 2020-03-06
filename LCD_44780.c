@@ -247,6 +247,7 @@ void Mensaje_Der(char *mensaje)         /* Prototipo de función para imprimir */
 void Menu(void)                         /* Función para mostrar el menú       */
 {                                       /* inicial en pantalla.               */
     short linea;
+    Borra_Pant4b();
     for(linea = 0; linea < 4;linea++)
     {
         Posicion_Cur4b(linea+1,1);
