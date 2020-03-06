@@ -43,5 +43,15 @@ typedef union                           /* Variable tipo estructura para      */
     };
 } SENALES;
 
+typedef struct                          /* Estructura para almacenar la fecha */
+{                                       /* y hora del dispositivo.            */
+    uint16_t ano;
+    uint8_t mes;
+    uint8_t dia;
+    uint8_t hora;
+    uint8_t minuto;
+    uint8_t segundo;
+} tiempo;
+
 #endif	/* XC_GLOBALES_H */
 
