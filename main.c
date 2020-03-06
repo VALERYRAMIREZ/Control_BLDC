@@ -55,7 +55,11 @@ int main(void) {
                 Menu();
                 Selec_MenuS(boton);
                 senales.nInterfaz = 0;
-            }            
+            }
+            else if(senales.nInterfaz && (selMenu == 1))
+            {
+                cpos_Menu_S(selMenu,(uint8_t) boton);
+            }
             boton = 0;
             senales.tecla = 0;    
         }                               
