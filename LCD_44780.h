@@ -163,4 +163,9 @@ void Selec_MenuS(char posMenu);         /* Prototipo de función para seleccionar
 void Menu_S(uint8_t funcion);           /* Prototipo de función para imprimir */
                                         /* los menúes secundarios.            */
 
+void cpos_Menu_S(uint8_t funcion, uint8_t boton);/* Prototipo de función para    */
+                                        /* el cursor en la posición del       */
+                                        /* parámetro a llenar.                */
+ 
+
 #endif	/* LCD_44780_H */
