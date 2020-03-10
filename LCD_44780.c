@@ -3,10 +3,14 @@
 #include "mensajes.h"
 #include <stdio.h>
 
+/*         Definición de variables para el uso interno de la librería.        */
+
+volatile uint8_t selMenu = 1;
+
 /*       Definición de opciones de menú a desplegar en la pantalla LCD.       */
 
 const char *menu_i[] = {"1) Hora","2) Param. Motor","3) Manual","4) Auto"};
-const char *menu_r[] = {"  Config. fecha","DD:","MM:","AA:","hh:","mm:","ss:"};
+const char *menu_r[] = {" Config. fecha","DD:","MM:","AA:","hh:","mm:","ss:"};
 const char *menu_m[] = {"   Param. PID","P:","I:","D:"};
 
 /* Definición de funciones para el control de la pantalla LCD. */
@@ -243,15 +247,48 @@ void Mensaje_Der(char *mensaje)         /* Prototipo de función para imprimir */
 void Menu(void)                         /* Función para mostrar el menú       */
 {                                       /* inicial en pantalla.               */
     short linea;
+    Borra_Pant4b();
     for(linea = 0; linea < 4;linea++)
     {
-        Posicion_Cur4b(linea+1,0);
+        Posicion_Cur4b(linea+1,1);
         Mensaje_Ent((char*) menu_i[linea]);
     }
 }
 
-void Menu_S(unsigned char funcion)      /* Función para desplegar los menú    */
+void Selec_MenuS(char posMenu)          /* Función para desplazarse a través  */
+{                                       /* de las funciones del menu principal*/
+    if(posMenu == 'A')                  /* con el fin de seleccionar el menú  */
+    {                                   /* secundario a deplegar.             */
+        selMenu++;
+        Posicion_Cur4b(selMenu - 1,0);
+        Mensaje_Ent((char*) " ");
+    }
+    else if(posMenu == 'B')
+    {
+        selMenu--;
+        Posicion_Cur4b(selMenu + 1,0);
+        Mensaje_Ent((char*) " ");
+    }
+    switch(selMenu)
+    {
+        case 5:
+        {
+            selMenu = 1;
+            break;
+        }
+        case 0:
+        {
+            selMenu = 4;
+            break;
+        }
+    }
+    Posicion_Cur4b(selMenu,0);
+    Mensaje_Ent((char*) ">");
+}
+
+void Menu_S(uint8_t funcion)            /* Función para desplegar los menú    */
 {                                       /* secundarios.                       */
+    Borra_Pant4b();
     switch(funcion)
     {
         case 1:
@@ -259,7 +296,7 @@ void Menu_S(unsigned char funcion)      /* Función para desplegar los menú    */
             short linea;
             for(linea = 0; linea < 4; linea++)
             {
-                Posicion_Cur4b(linea+1,0);
+                Posicion_Cur4b(linea+1,1);
                 if(!linea)
                 {
                     Mensaje_Ent((char*) menu_r[linea]);
@@ -290,4 +327,48 @@ void Menu_S(unsigned char funcion)      /* Función para desplegar los menú    */
         }
         break;
     }
+}
+
+void cpos_Menu_S(uint8_t funcion, uint8_t boton)/* Función para mover el      */
+{                                       /* cursor a la posición del parámetro */
+    static uint8_t contFila = 2, contCol = 4;/* a llenar.                     */
+    switch(boton)
+    {
+        case (uint8_t) 'D':
+        {
+            contFila++;
+            if((contFila == 5) && (contCol == 4))
+            {
+                contFila = 2;
+                contCol = 11;
+            }
+            if((contFila == 5) && (contCol == 11))
+            {
+                contFila = 2;
+                contCol = 4;
+            }
+        }       
+        break;
+        case (uint8_t) 'C':
+        {
+            contFila--;
+            if((contFila == 1) && (contCol == 4))
+            {
+                contFila = 4;
+                contCol = 11;
+            }
+            if((contFila == 1) && (contCol == 11))
+            {
+                contFila = 4;
+                contCol = 4;
+            }
+        }
+        break;
+        default:
+        {
+            //Nada.
+        }
+        break;
+    }
+    Posicion_Cur4b(contFila, contCol);
 }

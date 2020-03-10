@@ -23,6 +23,9 @@ extern uint8_t tTecla;                  /* Variable para contar la cantidad de
                                          * antirebote cuando se detecta la
                                          * presión de una tecla.              */
 
+extern uint8_t selMenu;                 /* Variable para almacenar el menú a 
+                                         * seleccionar.                       */                 
+
 //static volatile uint8_t estado;         /* variable que conserva el estado de
 //                                         * la suma del filtro antirebote.     */
 
@@ -31,7 +34,8 @@ typedef union                           /* Variable tipo estructura para      */
     unsigned int banderas;              /* marcar eventos de interrupciones en*/
     struct                              /* las interrupciones.                */
     {                                   
-        unsigned int restantes:14;
+        unsigned int restantes:12;
+        unsigned int nInterfaz:2;
         unsigned int flanco:1;
         unsigned int tecla:1;           /* Bandera para indicar el uso de la 
                                          * interrupción por notificación de
