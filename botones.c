@@ -12,6 +12,14 @@ enum estBotones                     /* Enumerador para seleccionar el valor de*/
     subida,
     bajada
 };
+
+const uint8_t columnas[] = {0x10,0x20,0x00,0x40,0x00,0x00,0x00,0x80};
+
+const char tcldo[][4] = {{'7','8','9','D'},
+                        {'4','5','6','C'},
+                        {'1','2','3','B'},
+                        {'*','0','#','A'}};
+
 /*            Funciones para discriminar la tecla presionada.                 */
 
 uint8_t Anti_R(uint8_t estad, bool pin)
@@ -44,131 +52,25 @@ unsigned int flanco(bool bitAnt, bool bit)/* Función para determinar el tipo  */
 
 uint8_t detec_Columna(uint8_t pad)      /* Función para detectar la columna   */
 {                                       /* activada cuando se han presionado  */
-    uint8_t pinA;                       /* teclas y devuelve la posición en el*/
-    switch(pad & 0xf0)                  /* nibble alto de la columna activada,*/
-    {                                   /* la función está hecha para que la  */
-        case 0x10:                      /* función "flanco" sepa cual bit va a*/
-        {                               /* comparar.                          */
-            pinA = 0x10;
-            break;
-        }
-        case 0x20:
-        {
-            pinA = 0x20;
-            break;
-        }       
-        case 0x40:
-        {
-            pinA = 0x40;
-            break;
-        }        
-        case 0x80:
-        {
-            pinA = 0x80;
-            break;
-        }        
-        default:                        /* El caso por defecto devuelve un    */
-        {                               /* valor que no sirve de manera que la*/
-            pinA = 0x00;                /* próxima función no haga nada.      */
-            break;
-        }
-    }
-    return pinA;
+    return columnas[((pad & 0xf0) >> 4) - 1];/* teclas, devuelve la posición  */
+                                        /* en el nibble alto de la columna    */
+                                        /* activada. La función está hecha    */
+                                        /* para que la función "flanco" sepa  */
+                                        /* cual bit va a comparar.            */
 }
 
 char det_Tecla(uint8_t lectura)         /* Función para asignar el valor      */
-{                                       /* a la tecla presionada.             */
-    char valorTecla;
-    switch(lectura)
+{                                       /* a la tecla presionada. La función */
+    uint8_t fila = 0, col = 0, contf = 0, contc = 0;/* calcula la columna y la*/
+    do                                  /* fila como el valor almacenado en un*/
+    {                                   /* arreglo bidimensional.             */
+        col = ((lectura & 0xf0) >> 4) >> contc;
+        contc++;
+    } while(col != 1);
+    do
     {
-        /* Teclas de la fila superior.                                        */
-        case(0x11):
-        {
-            valorTecla = '7';
-        }
-        break;
-        case(0x21):
-        {
-            valorTecla = '8';
-        }
-        break;
-        case(0x41):
-        {
-            valorTecla = '9';
-        }
-        break;
-        case(0x81):
-        {
-            valorTecla = 'D';
-        }
-        break;
-        /* Teclas de la segunda fila.                                         */
-        case(0x12):
-        {
-            valorTecla = '4';
-        }
-        break;
-        case(0x22):
-        {
-            valorTecla = '5';
-        }
-        break;
-        case(0x42):
-        {
-            valorTecla = '6';
-        }
-        break;
-        case(0x82):
-        {
-            valorTecla = 'C';
-        }
-        break;
-        /* Teclas de la tercera fila.                                         */
-        case(0x14):
-        {
-            valorTecla = '1';
-        }
-        break;
-        case(0x24):
-        {
-            valorTecla = '2';
-        }
-        break;
-        case(0x44):
-        {
-            valorTecla = '3';
-        }
-        break;
-        case(0x84):
-        {
-            valorTecla = 'B';
-        }
-        break;
-        /* Teclas de la cuarta fila.                                          */
-        case(0x18):
-        {
-            valorTecla = '*';
-        }
-        break;
-        case(0x28):
-        {
-            valorTecla = '0';
-        }
-        break;
-        case(0x48):
-        {
-            valorTecla = '#';
-        }
-        break;
-        case(0x88):
-        {
-            valorTecla = 'A';
-        }
-        break;
-        default:                        /* La opción en caso de que se        */
-        {                               /* más de una tecla al mismo tiempo es*/
-            valorTecla =0xff;           /* no asignar ninguna tecla.          */
-        }
-    }
-    return valorTecla;
+        fila = ((lectura & 0x0f) >> contf);
+        contf++;
+    } while(fila != 1);
+    return tcldo[contf-1][contc-1];
 }
