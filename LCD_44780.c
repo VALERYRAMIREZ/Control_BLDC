@@ -329,9 +329,9 @@ void Menu_S(uint8_t funcion)            /* Función para desplegar los menú    */
     }
 }
 
-void cpos_Menu_S(uint8_t funcion, uint8_t boton)/* Función para mover el cursor  */
-{                                       /* en la posición del parámetro a     */
-    static uint8_t contFila = 2, contCol = 4;/* llenar.                       */
+void cpos_Menu_S(uint8_t funcion, uint8_t boton)/* Función para mover el      */
+{                                       /* cursor a la posición del parámetro */
+    static uint8_t contFila = 2, contCol = 4;/* a llenar.                     */
     switch(boton)
     {
         case (uint8_t) 'D':

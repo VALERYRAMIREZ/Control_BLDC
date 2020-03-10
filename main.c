@@ -41,26 +41,26 @@ int main(void) {
 //            Posicion_Cur4b(1,11);
             boton = det_Tecla(teclado);
 //            Mensaje_Ent(&boton);
-            if(strcmp(&boton,"#") && !senales.nInterfaz)
-            {
+            if(strcmp(&boton,"#") && !senales.nInterfaz)/* Se cambia la opción*/
+            {                               /* del menú seleccionado.         */
                 Selec_MenuS(boton);
             }
-            else if(!strcmp(&boton,"#") && !senales.nInterfaz)
-            {
+            else if(!strcmp(&boton,"#") && !senales.nInterfaz)/* Se accede al */
+            {                               /* menú secundario seleccionado.  */
                 Menu_S(selMenu);
                 senales.nInterfaz = 1;
             }
-            else if(!strcmp(&boton,"*") && senales.nInterfaz)
-            {
-                Menu();
+            else if(!strcmp(&boton,"*") && senales.nInterfaz)/* Se sale del   */
+            {                               /* menú secundario actual y se    */
+                Menu();                     /* vuelve al menú principal.      */
                 Selec_MenuS(boton);
                 senales.nInterfaz = 0;
             }
-            else if(senales.nInterfaz && (selMenu == 1))
-            {
-                cpos_Menu_S(selMenu,(uint8_t) boton);
-            }
-            boton = 0;
+            else if(senales.nInterfaz && (selMenu == 1))/* Se permite que el  */
+            {                               /* cursor se mueva entre los      */
+                cpos_Menu_S(selMenu,(uint8_t) boton);/* parámetros a llenar   */
+            }                               /* del menú secundario 1          */
+            boton = 0;                      /* (configuración del reloj).     */
             senales.tecla = 0;    
         }                               
     }
