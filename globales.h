@@ -46,12 +46,19 @@ typedef union                           /* Variable tipo estructura para      */
 typedef struct                          /* Estructura para almacenar la fecha */
 {                                       /* y hora del dispositivo.            */
     uint16_t ano;
-    uint8_t mes;
-    uint8_t dia;
-    uint8_t hora;
-    uint8_t minuto;
-    uint8_t segundo;
+    uint16_t mes;
+    uint16_t dia;
+    uint16_t hora;
+    uint16_t minuto;
+    uint16_t segundo;
 } tiempo;
+
+typedef struct
+{
+    uint16_t P;
+    uint16_t I;
+    uint16_t D;
+} motor;
 
 #endif	/* XC_GLOBALES_H */
 
