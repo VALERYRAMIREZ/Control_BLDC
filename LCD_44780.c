@@ -339,8 +339,29 @@ void Menu_S(uint8_t funcion)            /* Función para desplegar los menú    */
 
 void cpos_Menu_S(uint8_t funcion, uint8_t boton)/* Función para mover el      */
 {                                       /* cursor a la posición del parámetro */
-    static uint8_t cFila_1 = 2, cCol_1 = 4, cParam = 1;/* a llenar.           */
-    switch(boton)
+                                        /* a llenar.                          */
+    switch(funcion)
+    {
+        case 1:
+        {
+            Opcion_RTC(boton);
+        }
+        break;
+        case 2:
+        {
+            Opcion_PID(boton);
+        }
+        default:
+        {
+            //Nada.
+        }
+    }
+}
+
+void Opcion_RTC(uint8_t vRTC)           /* Función para despliegue            */
+{                                       /* y almacenamiento de los parámetros */
+    static uint8_t cFila_1 = 2, cCol_1 = 4, cParam = 1;/* correspondientes al */
+    switch(vRTC)                        /* RTC.                               */
     {
         case (uint8_t) 'D':
         {
@@ -378,12 +399,59 @@ void cpos_Menu_S(uint8_t funcion, uint8_t boton)/* Función para mover el      */
             }
         }
         break;
-        default:
+        default:                        /* El caso default tiene implementado */
+        {                               /* el llenado de los parámetros       */
+            Posicion_Cur4b(cFila_1,cCol_1);/* correspondientes del menú       */
+            Mensaje_Ent((char*) Alma_RTC(cParam,vRTC));/* secundario          */
+        }                               /* seleccionado.                      */
+        break;
+    }    
+    Posicion_Cur4b(cFila_1,cCol_1);
+}
+
+void Opcion_PID(uint8_t vPID)           /* Función para despliegue            */
+{                                       /* y almacenamiento de los parámetros */
+    static uint8_t cFila_2 = 2, cParam_2 = 1;/* correspondientes              */
+    switch(vPID)                        /* al PID.                            */
+    {
+        case (uint8_t) 'D':
         {
-            Posicion_Cur4b(cFila_1,cCol_1);
-            Mensaje_Ent((char*) Alma_RTC(cParam,boton));
+            cFila_2++;
+            cParam_2++;
+            if(cParam_2 == 4)
+            {
+                cParam_2 = 1;
+            }
+            if(cFila_2 == 5)
+            {
+                cFila_2 = 2;
+            }
+        }       
+        break;
+        case (uint8_t) 'C':
+        {
+            cFila_2--;
+            cParam_2--;
+            if(!cParam_2)
+            {
+                cParam_2 = 3;
+            }
+            if(cFila_2 == 1)
+            {
+                cFila_2 = 4;
+            }
+            if(cFila_2 == 1)
+            {
+                cFila_2 = 4;
+            }
         }
         break;
-    }
-    Posicion_Cur4b(cFila_1,cCol_1);
+        default:                        /* El caso default tiene implementado */
+        {                               /* el llenado de los parámetros       */
+            Posicion_Cur4b(cFila_2,4);/* correspondientes del menú       */
+            //Mensaje_Ent((char*) Alma_PID(cParam_2,vPID));/* secundario      */
+        }                               /* seleccionado.                      */
+        break;
+    }    
+    Posicion_Cur4b(cFila_2,3);
 }

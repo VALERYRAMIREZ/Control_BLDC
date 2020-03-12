@@ -38,9 +38,7 @@ int main(void) {
         tecladoAnt = PORTE;
         if(senales.tecla)
         {
-//            Posicion_Cur4b(1,11);
             boton = det_Tecla(teclado);
-//            Mensaje_Ent(&boton);
             if(strcmp(&boton,"#") && !senales.nInterfaz)/* Se cambia la opción*/
             {                               /* del menú seleccionado.         */
                 Selec_MenuS(boton);
@@ -56,7 +54,7 @@ int main(void) {
                 Selec_MenuS(boton);
                 senales.nInterfaz = 0;
             }
-            else if(senales.nInterfaz && (selMenu == 1))/* Se permite que el  */
+            else if(senales.nInterfaz)// && (selMenu == 1))/* Se permite que el  */
             {                               /* cursor se mueva entre los      */
                 cpos_Menu_S(selMenu,(uint8_t) boton);/* parámetros a llenar   */
             }                               /* del menú secundario 1          */
