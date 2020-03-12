@@ -43,5 +43,29 @@ typedef union                           /* Variable tipo estructura para      */
     };
 } SENALES;
 
+typedef struct                          /* Estructura para almacenar la fecha */
+{                                       /* y hora del dispositivo. La         */
+    uint8_t ano[5];                       /* estructura está pensada para */
+    uint8_t mes[3];
+    uint8_t dia[3];
+    uint8_t hora[3];
+    uint8_t minuto[3];
+    uint8_t segundo[3];
+} tiempo;
+
+typedef struct
+{
+    uint16_t P[4];
+    uint16_t I[4];
+    uint16_t D[4];
+} motor;
+
+/*     Definición de funciones para el manejo de los datos introducidos en    */
+/*                      la configuración del sietema.                         */
+
+char* Alma_RTC(uint8_t numParam,uint8_t dato);/* Prototipo de función para el
+                                             * almacenamiento de los datos en
+                                             * las estructuras
+                                             * correspondientes.              */
 #endif	/* XC_GLOBALES_H */
 
