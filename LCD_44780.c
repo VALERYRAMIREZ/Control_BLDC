@@ -1,17 +1,23 @@
 #include "LCD_44780.h"
 #include "temporizadores.h"
 #include "mensajes.h"
+#include "globales.h"
 #include <stdio.h>
 
 /*         Definición de variables para el uso interno de la librería.        */
 
-volatile uint8_t selMenu = 1;
+uint8_t selMenu = 1;                    /* Variable para almacenar el menú 
+                                         * secundario activo.                 */
+uint8_t filMenu_r = 2;                  /* Variable para almacenar la posición
+                                         * en la que aparece la primera columna
+                                         * del menú secundario 1.             */
 
 /*       Definición de opciones de menú a desplegar en la pantalla LCD.       */
 
 const char *menu_i[] = {"1) Hora","2) Param. Motor","3) Manual","4) Auto"};
 const char *menu_r[] = {" Config. fecha","DD:","MM:","AA:","hh:","mm:","ss:"};
 const char *menu_m[] = {"   Param. PID","P:","I:","D:"};
+extern tiempo RTC;
 
 /* Definición de funciones para el control de la pantalla LCD. */
 
@@ -246,12 +252,12 @@ void Mensaje_Der(char *mensaje)         /* Prototipo de función para imprimir */
 
 void Menu(void)                         /* Función para mostrar el menú       */
 {                                       /* inicial en pantalla.               */
-    short linea;
+    short lineaM;
     Borra_Pant4b();
-    for(linea = 0; linea < 4;linea++)
+    for(lineaM = 0; lineaM < 4;lineaM++)
     {
-        Posicion_Cur4b(linea+1,1);
-        Mensaje_Ent((char*) menu_i[linea]);
+        Posicion_Cur4b(lineaM+1,1);
+        Mensaje_Ent((char*) menu_i[lineaM]);
     }
 }
 
@@ -288,35 +294,37 @@ void Selec_MenuS(char posMenu)          /* Función para desplazarse a través  */
 
 void Menu_S(uint8_t funcion)            /* Función para desplegar los menú    */
 {                                       /* secundarios.                       */
+    short lineaS;
+    static uint8_t colMenu_r = 9;       /* Variable para almacenar la posición
+                                         * en la que aparece la segunda columna
+                                         * del menú secundario 1.             */
     Borra_Pant4b();
     switch(funcion)
     {
         case 1:
         {
-            short linea;
-            for(linea = 0; linea < 4; linea++)
+            for(lineaS = 0; lineaS < 4; lineaS++)
             {
-                Posicion_Cur4b(linea+1,1);
-                if(!linea)
+                Posicion_Cur4b(lineaS+1,1);
+                if(!lineaS)
                 {
-                    Mensaje_Ent((char*) menu_r[linea]);
+                    Mensaje_Ent((char*) menu_r[lineaS]);
                 }
                 else
                 {
-                    Mensaje_Ent((char*) menu_r[linea]);
-                    Posicion_Cur4b(linea+1,8);
-                    Mensaje_Ent((char*) menu_r[linea+3]);
+                    Mensaje_Ent((char*) menu_r[lineaS]);
+                    Posicion_Cur4b(lineaS+1,colMenu_r);
+                    Mensaje_Ent((char*) menu_r[lineaS+3]);
                 }
             }
         }
         break;
         case 2:
         {
-            short linea;
-            for(linea = 0; linea < 4; linea++)
+            for(lineaS = 0; lineaS < 4; lineaS++)
             {
-                Posicion_Cur4b(linea+1,0);
-                Mensaje_Ent((char*) menu_m[linea]);
+                Posicion_Cur4b(lineaS+1,0);
+                Mensaje_Ent((char*) menu_m[lineaS]);
             }
         }
         break;
@@ -331,44 +339,51 @@ void Menu_S(uint8_t funcion)            /* Función para desplegar los menú    */
 
 void cpos_Menu_S(uint8_t funcion, uint8_t boton)/* Función para mover el      */
 {                                       /* cursor a la posición del parámetro */
-    static uint8_t contFila = 2, contCol = 4;/* a llenar.                     */
+    static uint8_t cFila_1 = 2, cCol_1 = 4, cParam = 1;/* a llenar.           */
     switch(boton)
     {
         case (uint8_t) 'D':
         {
-            contFila++;
-            if((contFila == 5) && (contCol == 4))
+            cFila_1++;
+            cParam++;
+            if((cFila_1 == 5) && (cCol_1 == 4))
             {
-                contFila = 2;
-                contCol = 11;
+                cFila_1 = 2;
+                cCol_1 = 12;
             }
-            if((contFila == 5) && (contCol == 11))
+            if((cFila_1 == 5) && (cCol_1 == 12))
             {
-                contFila = 2;
-                contCol = 4;
+                cFila_1 = 2;
+                cCol_1 = 4;
             }
         }       
         break;
         case (uint8_t) 'C':
         {
-            contFila--;
-            if((contFila == 1) && (contCol == 4))
+            cFila_1--;
+            cParam--;
+            if(!cParam)
             {
-                contFila = 4;
-                contCol = 11;
+                cParam = 6;
             }
-            if((contFila == 1) && (contCol == 11))
+            if((cFila_1 == 1) && (cCol_1 == 4))
             {
-                contFila = 4;
-                contCol = 4;
+                cFila_1 = 4;
+                cCol_1 = 12;
+            }
+            if((cFila_1 == 1) && (cCol_1 == 12))
+            {
+                cFila_1 = 4;
+                cCol_1 = 4;
             }
         }
         break;
         default:
         {
-            //Nada.
+            Posicion_Cur4b(cFila_1,cCol_1);
+            Mensaje_Ent((char*) Alma_RTC(cParam,boton));
         }
         break;
     }
-    Posicion_Cur4b(contFila, contCol);
+    Posicion_Cur4b(cFila_1,cCol_1);
 }
