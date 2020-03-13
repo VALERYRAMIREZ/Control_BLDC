@@ -411,7 +411,8 @@ void Opcion_RTC(uint8_t vRTC)           /* Función para despliegue            */
 
 void Opcion_PID(uint8_t vPID)           /* Función para despliegue            */
 {                                       /* y almacenamiento de los parámetros */
-    static uint8_t cFila_2 = 2, cParam_2 = 1;/* correspondientes              */
+    static uint8_t cFila_2 = 2, cCol_2 = 3, cParam_2 = 1;/* correspondientes  */
+    char* valor;
     switch(vPID)                        /* al PID.                            */
     {
         case (uint8_t) 'D':
@@ -440,18 +441,21 @@ void Opcion_PID(uint8_t vPID)           /* Función para despliegue            */
             {
                 cFila_2 = 4;
             }
-            if(cFila_2 == 1)
-            {
-                cFila_2 = 4;
-            }
         }
         break;
         default:                        /* El caso default tiene implementado */
         {                               /* el llenado de los parámetros       */
-            Posicion_Cur4b(cFila_2,4);/* correspondientes del menú       */
-            //Mensaje_Ent((char*) Alma_PID(cParam_2,vPID));/* secundario      */
+            if(cCol_2 == 7)
+            {
+                cCol_2 = 3;
+            }
+            //cCol_2++;
+            Posicion_Cur4b(cFila_2,cCol_2);/* correspondientes del menú       */
+            //valor = Alma_PID(cParam_2,vPID);
+            //Mensaje_Ent((char*) valor);/* secundario      */
+            Mensaje_Ent((char*) Alma_PID(cParam_2,vPID));
         }                               /* seleccionado.                      */
         break;
     }    
-    Posicion_Cur4b(cFila_2,3);
+    Posicion_Cur4b(cFila_2,cCol_2);
 }
