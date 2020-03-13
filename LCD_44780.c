@@ -448,11 +448,8 @@ void Opcion_PID(uint8_t vPID)           /* Función para despliegue            */
             {
                 cCol_2 = 3;
             }
-            //cCol_2++;
             Posicion_Cur4b(cFila_2,cCol_2);/* correspondientes del menú       */
-            //valor = Alma_PID(cParam_2,vPID);
-            //Mensaje_Ent((char*) valor);/* secundario      */
-            Mensaje_Ent((char*) Alma_PID(cParam_2,vPID));
+            Mensaje_Ent((char*) Alma_PID(cParam_2,vPID));/* secundario        */
         }                               /* seleccionado.                      */
         break;
     }    

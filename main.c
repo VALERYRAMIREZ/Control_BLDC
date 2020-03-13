@@ -31,7 +31,7 @@ int main(void) {
     senales.tecla = 0;                  /* Lo puedo llamar de esa forma porque*/
     Posicion_Cur4b(1,0);                /* ya está instanciada la union en    */
     Menu();                             /* interup.c y al inicio de main se   */
-    Selec_MenuS(1);                      /* instancia la estructura como una   */
+                                         /* instancia la estructura como una   */
                                         /* variable externa.                  */
     while(1)
     {
