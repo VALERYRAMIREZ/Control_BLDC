@@ -412,7 +412,6 @@ void Opcion_RTC(uint8_t vRTC)           /* Función para despliegue            */
 void Opcion_PID(uint8_t vPID)           /* Función para despliegue            */
 {                                       /* y almacenamiento de los parámetros */
     static uint8_t cFila_2 = 2, cCol_2 = 3, cParam_2 = 1;/* correspondientes  */
-    char* valor;
     switch(vPID)                        /* al PID.                            */
     {
         case (uint8_t) 'D':
