@@ -55,17 +55,22 @@ typedef struct                          /* Estructura para almacenar la fecha */
 
 typedef struct
 {
-    uint16_t P[4];
-    uint16_t I[4];
-    uint16_t D[4];
+    uint8_t P[5];
+    uint8_t I[5];
+    uint8_t D[5];
 } motor;
 
 /*     Definición de funciones para el manejo de los datos introducidos en    */
 /*                      la configuración del sietema.                         */
 
-char* Alma_RTC(uint8_t numParam,uint8_t dato);/* Prototipo de función para el
+char* Alma_RTC(uint8_t nParam_1,uint8_t dato_1);/* Prototipo de función para el
                                              * almacenamiento de los datos en
-                                             * las estructuras
-                                             * correspondientes.              */
+                                             * las estructuras de configuración
+                                             * del RTC.                       */
+
+char* Alma_PID(uint8_t nParam_2,uint8_t dato_2);/* Prototipo de función para el
+                                             * almacenamiento de los datos en
+                                             * las estructuras de configuración
+                                             * del PID.                       */
 #endif	/* XC_GLOBALES_H */
 
