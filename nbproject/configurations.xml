@@ -30,6 +30,7 @@
       <itemPath>mensajes.c</itemPath>
       <itemPath>sistema.c</itemPath>
       <itemPath>temporizadores.c</itemPath>
+      <itemPath>globales.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

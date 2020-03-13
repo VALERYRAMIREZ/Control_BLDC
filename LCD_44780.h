@@ -166,6 +166,13 @@ void Menu_S(uint8_t funcion);           /* Prototipo de función para imprimir */
 void cpos_Menu_S(uint8_t funcion, uint8_t boton);/* Prototipo de función para    */
                                         /* el cursor en la posición del       */
                                         /* parámetro a llenar.                */
- 
 
+void Opcion_RTC(uint8_t vRTC);          /* Prototipo de función para despliegue
+                                         * y almacenamiento de los parámetros
+                                         * correspondientes al RTC.           */
+
+void Opcion_PID(uint8_t vPID);          /* Prototipo de función para despliegue            
+                                         * y almacenamiento de los parámetros
+                                         * correspondientes al PID.           */
+                                                
 #endif	/* LCD_44780_H */
